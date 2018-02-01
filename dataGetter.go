@@ -4,6 +4,7 @@ import 	(
 		"os"
 		"io/ioutil"
 		"net/http"
+		"encoding/json"
 		)
 
 func getBeers (url string) []byte{
@@ -18,6 +19,18 @@ func getBeers (url string) []byte{
 	body, err := ioutil.ReadAll(resp.Body)
 
 	return body
+}
+
+func mapMount (respString []byte) string{
+	var m map[string]json.RawMessage
+
+	err := json.Unmarshal(respString, &m)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return string(m["data"])
 }
 
 func main () {
