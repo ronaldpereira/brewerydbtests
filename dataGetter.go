@@ -42,9 +42,9 @@ func dataSplitter (rawData string) []string {
 
 func main () {
 	url := "http://api.brewerydb.com/v2/beers/?key="
-	url += os.Args[1]
+	url += "1023032de7609989ab2ffdad23549ef5"
 	url += "&availableId=1&p="
-	url += os.Args[2]
+	url += os.Args[1]
 
 	respString := getBeers(url)
 
