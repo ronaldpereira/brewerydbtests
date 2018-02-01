@@ -2,9 +2,10 @@ package main
 
 import 	(
 		"os"
-		"io/ioutil"
-		"net/http"
-		"encoding/json"
+		"strings"
+        "io/ioutil"
+        "net/http"
+        "encoding/json"
 		)
 
 func getBeers (url string) []byte{
@@ -33,6 +34,12 @@ func mapMount (respString []byte) string{
 	return string(m["data"])
 }
 
+func dataSplitter (rawData string) []string {
+	splitData := strings.Split(rawData, ",\"")
+
+	return splitData
+}
+
 func main () {
 	url := "http://api.brewerydb.com/v2/beers/?key="
 	url += os.Args[1]
@@ -41,5 +48,9 @@ func main () {
 
 	respString := getBeers(url)
 
-	os.Stdout.Write(respString)
+	rawData := mapMount(respString)
+
+	splitData := dataSplitter(rawData)
+
+	println(splitData[0])
 }
